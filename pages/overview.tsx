@@ -7,10 +7,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AppNavbar from "../components/AppNavbar";
 import AppRwdFlex from "../components/AppRwdFlex";
-import OverviewSection from "../components/OverviewSection";
+import OverviewSection, { Level } from "../components/OverviewSection";
 import BaseCard from "../components/BaseCard";
 import HuminityCard from "../components/subcard/HuminityCard";
-import TempertureCard from "../components/subcard/TempertureCard";
+import TempertureCard from "../components/subcard/TemperatureCard";
 import BridgeSDK from "../bridge-sdk/Bridge";
 import PM25Card from "../components/subcard/PM25Card";
 import {
@@ -31,14 +31,13 @@ function updateDataWrapper(ws: WebSocket) {
 }
 
 export default function Overview() {
-  const [level, setLevel] = useState(0);
   const [toggle, setToggle] = useState(false);
   const [temperture, setTemperture] = useState("");
   const [huminity, setHuminity] = useState("");
   const [pm25, setPM25] = useState("");
-
   const [conn, setConn] = useState<WebSocket | null>(null);
 
+  /* Authouse Bridge */
   if (!deviceInfo.isConnectedToBridge && globalThis.WebSocket)
     deviceInfo.connectToBridge(
       "386cfdc39026cd72c3e352339b340ba80b25a23b",
@@ -73,35 +72,24 @@ export default function Overview() {
       }
     );
 
+  /* Calculate Level */
+  const calculateLevel = (): Level => {
+    const thePM25 = Number(pm25);
+
+    if (thePM25 >= 0 && thePM25 <= 1050) return Level.SAFE;
+    if (thePM25 >= 1050 && thePM25 <= 3000) return Level.MEDIUM;
+    if (thePM25 > 3000) return Level.SERIOUS;
+    return 3;
+  };
+
   return (
     <div className="authouse-root-app p-10 bg-gray-50 text-gray-600 m-auto h-screen w-screen bg">
       <AppNavbar owner="pan93412" />
       <AppRwdFlex>
         <div className="pb-3">
           <div className="pb-5">
-            <OverviewSection level={level} />
+            <OverviewSection level={calculateLevel()} />
           </div>
-          <button
-            type="button"
-            className="px-6 py-3 mr-2 bg-green-500 text-white rounded"
-            onClick={() => setLevel(0)}
-          >
-            to 0
-          </button>
-          <button
-            type="button"
-            className="px-6 py-3 mr-2 bg-yellow-500 text-white rounded"
-            onClick={() => setLevel(1)}
-          >
-            to 1
-          </button>
-          <button
-            type="button"
-            className="px-6 py-3 mr-2 bg-red-500 text-white rounded"
-            onClick={() => setLevel(2)}
-          >
-            to 2
-          </button>
         </div>
         <div>
           <div className="pb-5">
