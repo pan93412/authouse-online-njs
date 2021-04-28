@@ -14,6 +14,6 @@ export default function TempertureCard({ value }: TempertureCardProps) {
       unit="°C"
       icon={faThermometerHalf}
       backgroundColor="#59A9C2"
-    ></BaseTextCard>
+    />
   );
 }

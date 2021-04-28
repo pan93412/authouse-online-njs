@@ -1,5 +1,5 @@
-import { faTint } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import { faTint } from "@fortawesome/free-solid-svg-icons";
 import BaseTextCard from "../BaseTextCard";
 
 export interface HuminityCardProps {
@@ -11,10 +11,10 @@ export default function HuminityCard({ value }: HuminityCardProps) {
     <BaseTextCard
       title="HUMINITY"
       subtitle="濕度"
-      value={ value }
+      value={value}
       unit="%"
-      icon={ faTint }
+      icon={faTint}
       backgroundColor="#10B981"
-    ></BaseTextCard>
+    />
   );
 }

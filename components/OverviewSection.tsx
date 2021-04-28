@@ -17,22 +17,38 @@ interface OverviewState {
   subtitleText: string;
 }
 
-export default class OverviewSection extends React.Component<OverviewProps, OverviewState> {
-  state: OverviewState = {
-    borderColor: "",
-    textColor: "",
-    titleText: "",
-    subtitleText: "",
-  };
+export default class OverviewSection extends React.Component<
+  OverviewProps,
+  OverviewState
+> {
+  textColorMap = ["green", "yellow", "red"].map((color) => `text-${color}-600`);
 
-  textColorMap = ["green", "yellow", "red"].map(color => `text-${color}-600`);
-  borderColorMap = ["green", "yellow", "red"].map(color => `border-${color}-400`);
-  titleTextMap = ["Safe", "Notice", "Serious"]
+  borderColorMap = ["green", "yellow", "red"].map(
+    (color) => `border-${color}-400`
+  );
+
+  titleTextMap = ["Safe", "Notice", "Serious"];
+
   subtitleTextMap = ["環境適宜", "需要注意環境", "環境稍亂"];
 
   constructor(props: OverviewProps) {
     super(props);
     this.updateValue = this.updateValue.bind(this);
+    this.state = {
+      borderColor: "",
+      textColor: "",
+      titleText: "",
+      subtitleText: "",
+    } as OverviewState;
+  }
+
+  componentDidMount() {
+    this.updateValue();
+  }
+
+  componentDidUpdate(prevProps: OverviewProps) {
+    const { level } = this.props;
+    if (level !== prevProps.level) this.updateValue();
   }
 
   updateValue() {
@@ -44,20 +60,20 @@ export default class OverviewSection extends React.Component<OverviewProps, Over
     }));
   }
 
-  componentDidMount() {
-    this.updateValue();
-  }
-
-  componentDidUpdate(prevProps: OverviewProps) {
-    if (this.props.level !== prevProps.level) this.updateValue();
-  }
-
   render() {
+    const { borderColor, textColor, titleText, subtitleText } = this.state;
+
     return (
       <div>
-        <div className={`overview-card rounded-full border-4 h-60 w-60 flex flex-col content-center justify-center items-center ${this.state.borderColor}`}>
-          <p className={`text-3xl font-bold pb-2 overview-title" ${this.state.textColor}`}>{ this.state.titleText }</p>
-          <p className={`text-xl font-light overview-text ${this.state.textColor}`}>{ this.state.subtitleText }</p>
+        <div
+          className={`overview-card rounded-full border-4 h-60 w-60 flex flex-col content-center justify-center items-center ${borderColor}`}
+        >
+          <p className={`text-3xl font-bold pb-2 overview-title" ${textColor}`}>
+            {titleText}
+          </p>
+          <p className={`text-xl font-light overview-text ${textColor}`}>
+            {subtitleText}
+          </p>
         </div>
       </div>
     );

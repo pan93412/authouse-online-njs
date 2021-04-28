@@ -1,3 +1,4 @@
+import React from "react";
 import BaseCard, { BaseCardProps } from "./BaseCard";
 
 export interface BaseTextCardProps extends BaseCardProps {
@@ -6,26 +7,41 @@ export interface BaseTextCardProps extends BaseCardProps {
 }
 
 export default function BaseTextCard({
-  title, subtitle, value,
-  unit, icon, backgroundColor, textColor,
+  title,
+  subtitle,
+  value,
+  unit,
+  icon,
+  backgroundColor,
+  textColor,
 }: BaseTextCardProps) {
-  if (!textColor) textColor = "#FFFFFF";
-  if (!backgroundColor) backgroundColor = "#000000";
+  const theTextColor = textColor || "#FFFFFF";
+  const theBackgroundColor = backgroundColor || "#000000";
 
   return (
     <BaseCard
       title={title}
       subtitle={subtitle}
       icon={icon}
-      backgroundColor={backgroundColor}
-      textColor={textColor}
+      backgroundColor={theBackgroundColor}
+      textColor={theTextColor}
     >
-      <span className="text-6xl" style={{
-        color: textColor
-      }}>{ value }</span>
-      <span className="text-xl" style={{
-        color: textColor
-      }}>{ unit }</span>
+      <span
+        className="text-6xl"
+        style={{
+          color: textColor,
+        }}
+      >
+        {value}
+      </span>
+      <span
+        className="text-xl"
+        style={{
+          color: textColor,
+        }}
+      >
+        {unit}
+      </span>
     </BaseCard>
-  )
+  );
 }
