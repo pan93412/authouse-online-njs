@@ -4,6 +4,7 @@ export enum Level {
   SAFE,
   MEDIUM,
   SERIOUS,
+  UNKNOWN,
 }
 
 export interface OverviewProps {
@@ -21,15 +22,17 @@ export default class OverviewSection extends React.Component<
   OverviewProps,
   OverviewState
 > {
-  textColorMap = ["green", "yellow", "red"].map((color) => `text-${color}-600`);
+  textColorMap = ["green", "yellow", "red", "grey"].map(
+    (color) => `text-${color}-600`
+  );
 
-  borderColorMap = ["green", "yellow", "red"].map(
+  borderColorMap = ["green", "yellow", "red", "grey"].map(
     (color) => `border-${color}-400`
   );
 
-  titleTextMap = ["Safe", "Notice", "Serious"];
+  titleTextMap = ["Safe", "Notice", "Serious", "Unknown"];
 
-  subtitleTextMap = ["環境適宜", "需要注意環境", "環境稍亂"];
+  subtitleTextMap = ["環境適宜", "需要注意環境", "環境稍亂", "資料異常"];
 
   constructor(props: OverviewProps) {
     super(props);
