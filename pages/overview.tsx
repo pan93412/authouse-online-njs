@@ -31,6 +31,7 @@ function updateDataWrapper(ws: WebSocket) {
 }
 
 export default function Overview() {
+  const [bridgeId] = useState("386cfdc39026cd72c3e352339b340ba80b25a23b");
   const [toggle, setToggle] = useState(false);
   const [temperture, setTemperture] = useState("");
   const [huminity, setHuminity] = useState("");
@@ -39,38 +40,33 @@ export default function Overview() {
 
   /* Authouse Bridge */
   if (!deviceInfo.isConnectedToBridge && globalThis.WebSocket)
-    deviceInfo.connectToBridge(
-      "386cfdc39026cd72c3e352339b340ba80b25a23b",
-      () => {
-        const theConn = deviceInfo.BridgeConnection;
+    deviceInfo.connectToBridge(bridgeId, () => {
+      const theConn = deviceInfo.BridgeConnection;
 
-        theConn.onmessage = function ConnectionOnMessage(message) {
-          const datapkg: { data?: string } = JSON.parse(
-            message.data.toString()
-          );
+      theConn.onmessage = function ConnectionOnMessage(message) {
+        const datapkg: { data?: string } = JSON.parse(message.data.toString());
 
-          console.debug(datapkg.data);
+        console.debug(datapkg.data);
 
-          const data: AuthouseCoreData = JSON.parse(datapkg.data || "{}");
+        const data: AuthouseCoreData = JSON.parse(datapkg.data || "{}");
 
-          console.debug(data);
+        console.debug(data);
 
-          if (IsPM25Data(data)) {
-            console.debug("received a PM2.5 data. storing.");
-            setPM25(data.value);
-          } else if (IsTempertureData(data)) {
-            console.debug("received a temperture data. storing.");
-            setTemperture(data.temperature);
-            setHuminity(data.humidity);
-          } else {
-            console.debug("the data is in an unknown type.");
-          }
-        };
+        if (IsPM25Data(data)) {
+          console.debug("received a PM2.5 data. storing.");
+          setPM25(data.value);
+        } else if (IsTempertureData(data)) {
+          console.debug("received a temperture data. storing.");
+          setTemperture(data.temperature);
+          setHuminity(data.humidity);
+        } else {
+          console.debug("the data is in an unknown type.");
+        }
+      };
 
-        setInterval(updateDataWrapper(theConn), 1500);
-        setConn(theConn);
-      }
-    );
+      setInterval(updateDataWrapper(theConn), 1500);
+      setConn(theConn);
+    });
 
   /* Calculate Level */
   const calculateLevel = (): Level => {
@@ -83,8 +79,10 @@ export default function Overview() {
   };
 
   return (
-    <div className="authouse-root-app p-10 bg-gray-50 text-gray-600 m-auto h-screen w-screen bg">
-      <AppNavbar owner="pan93412" />
+    <div className="authouse-root-app p-10 m-auto bg">
+      <div className="pb-10">
+        <AppNavbar id={bridgeId} />
+      </div>
       <AppRwdFlex>
         <div className="pb-3">
           <div className="pb-5">
@@ -128,6 +126,12 @@ export default function Overview() {
           </div>
         </div>
       </AppRwdFlex>
+      <style jsx>{`
+        .authouse-root-app {
+          background-image: url("background-image-1.jpg");
+          background-size: cover;
+        }
+      `}</style>
     </div>
   );
 }

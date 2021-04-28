@@ -12,7 +12,8 @@ export default function PM25Card({ value }: PM25CardProps) {
       subtitle="2.5-懸浮微粒"
       value={value}
       unit=""
-      backgroundColor="#DCDCDC"
+      backgroundColor="#696969"
+      textColor="#FFFFFF"
     />
   );
 }

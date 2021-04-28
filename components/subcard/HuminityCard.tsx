@@ -15,6 +15,7 @@ export default function HuminityCard({ value }: HuminityCardProps) {
       unit="%"
       icon={faTint}
       backgroundColor="#10B981"
+      textColor="#FFFFFF"
     />
   );
 }

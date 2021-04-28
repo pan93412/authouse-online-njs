@@ -6,7 +6,7 @@ export interface AppRwdFlexProps {
 
 export default function AppRwdFlex({ children }: AppRwdFlexProps) {
   return (
-    <div className="flex flex-col justify-around content-center items-center h-full md:flex-row">
+    <div className="app-rwd-flex flex flex-col sm:justify-around justify-center h-full md:flex-row">
       {children}
     </div>
   );

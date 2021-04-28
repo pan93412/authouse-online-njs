@@ -2,10 +2,10 @@ import React from "react";
 import Image from "next/image";
 
 export interface AppNavbarProps {
-  owner: string;
+  id: string;
 }
 
-export default function AppNavbar({ owner }: AppNavbarProps) {
+export default function AppNavbar({ id }: AppNavbarProps) {
   return (
     <div className="flex justify-between content-center items-center">
       <div>
@@ -17,7 +17,7 @@ export default function AppNavbar({ owner }: AppNavbarProps) {
           alt="Authouse Logo"
         />
       </div>
-      <div className="font-light">{owner} 的 Authouse</div>
+      <div className="font-light">Authouse {id.substr(0, 7)}</div>
     </div>
   );
 }

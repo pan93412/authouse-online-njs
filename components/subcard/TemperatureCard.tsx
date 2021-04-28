@@ -13,7 +13,7 @@ export default function TempertureCard({ value }: TempertureCardProps) {
       value={value}
       unit="°C"
       icon={faThermometerHalf}
-      backgroundColor="#696969"
+      backgroundColor="#59A9C2"
       textColor="#FFFFFF"
     />
   );
