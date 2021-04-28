@@ -1,12 +1,12 @@
 import { useState } from "react";
 import AppNavbar from "../components/AppNavbar";
 import AppRwdFlex from "../components/AppRwdFlex";
-import BaseTextCard from "../components/BaseTextCard";
 import OverviewSection from "../components/OverviewSection";
-import { faLightbulb, faThermometerHalf, faTint, faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { faLightbulb, faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import BaseCard from "../components/BaseCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HuminityCard from "../components/subcard/HuminityCard";
+import TempertureCard from "../components/subcard/TempertureCard";
 
 export default function Overview() {
   const [level, setLevel] = useState(0);
@@ -33,14 +33,7 @@ export default function Overview() {
             <HuminityCard value="70"></HuminityCard>
           </div>
           <div className="pb-5">
-            <BaseTextCard
-              title="TEMPERTURE"
-              subtitle="溫度"
-              value="27"
-              unit="°C"
-              icon={faThermometerHalf}
-              backgroundColor="#59A9C2"
-            ></BaseTextCard>
+            <TempertureCard value="27"></TempertureCard>
           </div>
         </div>
       </AppRwdFlex>
